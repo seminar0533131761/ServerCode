@@ -21,5 +21,5 @@ class UserService:
         tmp_user=users.find_one({"_id":id})
         self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
         return self.user
-    # async def get_all_async(self):
-    #     return self.users
+    async def get_all_async(self):
+        return self.users
