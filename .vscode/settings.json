@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./dal/data_objects/services"
+    ]
+}
