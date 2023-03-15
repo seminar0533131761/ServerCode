@@ -1,9 +1,9 @@
-from user import User
+from dal.data_objects.user import User
 import pymongo
 import flask
 from flask_cors import CORS,cross_origin
 from flask_restful import Api
-from user_actions import UsersActions
+# from dal.data_objects.user_actions import UsersActions
 import json
 from db_manger import DBManger
 
@@ -14,21 +14,7 @@ users = my_data_base["users"]
 
 app = flask.Flask(__name__)
 CORS(app)
-# @app.route('/')
-def hello():
-    response=flask.jsonify()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-# def is_user_exist(id):
-#     return 
-# def create_user(name, id):
-#     users.insert_many([{"user_name": "chani", "_id": "214088999"}])
 
-# @app.route('/users/<user_id>', methods=['GET'])
-# def get_user_by_id(user_id):
-#     user=users.find_one({"id":214088999})
-#     if user!=None:
-#         return flask.jsonify(user)
-#     return flask.jsonify({"message": "User not found"}), 404
 api=Api(app)
 base_url='127.0.0.1'
 @app.route("/user_actions/<int:user_id>/<string:user_name>", methods=['GET'])
@@ -76,10 +62,5 @@ def add_students():
     data = flask.request.files
     return flask.jsonify({"hee":"only connection try"})
 #api.add_resource(UsersActions,"/users_actions/<string:user_id>/<string:user_name>")
-@app.route("/suceess")
-def get_one():
-    user=UsersActions()
-    final=user.get_by_id("1")
-    return flask.jsonify({"final":"hrk"})
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port='8000', debug=True)

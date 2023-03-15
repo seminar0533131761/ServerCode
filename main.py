@@ -6,7 +6,7 @@ from flask_restful import Api
 # from user_actions import UsersActions
 import json
 # from db_manger import DBManger
-from user_crud import UserCRUD
+from dal.data_objects.user_crud import UserCRUD
 import asyncio
 mongo_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
 my_data_base = mongo_client["Registration"]

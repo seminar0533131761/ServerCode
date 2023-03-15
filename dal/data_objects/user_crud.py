@@ -1,6 +1,6 @@
 from icrud import ICRUD
 from db_manger import DBManger
-from user import User
+from dal.data_objects.user import User
 import pymongo
 import asyncio
 # from Idb_manger import IDBManger
