@@ -3,11 +3,11 @@ import pymongo
 import flask
 from flask_cors import CORS,cross_origin
 from flask_restful import Api
-from user_actions import UsersActions
+# from user_actions import UsersActions
 import json
 # from db_manger import DBManger
-from dal.data_objects.services.user_services import UserService
-
+from user_crud import UserCRUD
+import asyncio
 mongo_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
 my_data_base = mongo_client["Registration"]
 users = my_data_base["users"]
@@ -77,10 +77,16 @@ def add_students():
     data = flask.request.files
     return flask.jsonify({"hee":"only connection try"})
 #api.add_resource(UsersActions,"/users_actions/<string:user_id>/<string:user_name>")
-@app.route("/suceess")
-def get_one():
-    user=UserService()
+@app.route("/get_all_users")
+def get_all():
+    user=UserCRUD()
+    # asyncio.run(user.get_async("1"))
+    # loop = asyncio.get_event_loop()
+    # res=loop.run_until_complete(user.get_async("1"))
+    # loop.close()
+    # user_dict = {k: getattr(user, k) for k in ['_id', 'user_name', 'permission']}
+    # # print(json.dumps(user_dict, indent=2))
     final=user.get_async("1")
-    return flask.jsonify({"dd":final.permmision})
+    return flask.jsonify({"user name":final.user_name})
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port='8000', debug=True)
