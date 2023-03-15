@@ -10,18 +10,21 @@ users = my_data_base["users"]
 class UserCRUD(ICRUD):
     def UserService(self,users:DBManger):
         self.users=users.get_all_users()
-    # async def create_async(self,obj:T):
-    #     pass
-    # async def delete_async(self,id:int):
-    #     pass
-    async def update_async(self,id,permmision):
+    def create_async(self,obj):
+        tmp_user=users.insert_one(obj)
+        self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
+        return self.user
+    def delete_async(self,id):
+        tmp_user=users.delete_one({"_id":id})
+        self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
+        return self.user
+    def update_async(self,id,permmision):
         tmp_user=users.update_one({"_id":id},{"permmision":permmision})
         self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
         return self.user
     def get_async(self,_id):
         tmp_user=users.find_one({"_id":_id})
-        x=tmp_user
-        self.user=User(x["user_name"],x["_id"],x["permission"])
+        self.user=User(tmp_user["user_name"],tmp_user["_id"],tmp_user["permission"])
         return self.user
     async def get_all_async(self):
         return self.users

@@ -88,5 +88,9 @@ def get_all():
     # # print(json.dumps(user_dict, indent=2))
     final=user.get_async("1")
     return flask.jsonify({"user name":final.user_name})
+@app.route("del/<string:user_id>",method=['DELETE'])
+def delet():
+    user=UserCRUD()
+    final=user.
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port='8000', debug=True)
