@@ -3,14 +3,19 @@ from abc import ABC, abstractmethod
 class ICRUD(ABC):
     def __init__(self):
         self.my_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
-    async def create_async(self,obj):
+        self.my_data_base=self.my_client["Registration"]
+    @abstractmethod
+    def create_async(self,obj):
         pass
-    async def delete_async(self,id:int):
+    @abstractmethod
+    def delete_async(self,id):
         pass
-    async def update_async(self,obj):
+    @abstractmethod
+    def update_async(self,obj):
         pass
     @abstractmethod
     def get_async(self,id):
         pass
-    async def get_all_async(self):
+    @abstractmethod
+    def get_all_async(self):
         pass

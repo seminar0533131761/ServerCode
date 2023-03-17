@@ -5,6 +5,7 @@ from flask_cors import CORS,cross_origin
 from flask_restful import Api
 # from user_actions import UsersActions
 import json
+# from werkzeug import secure_filename
 # from db_manger import DBManger
 from dal.data_objects.user_crud import UserCRUD
 import asyncio
@@ -74,7 +75,8 @@ def update_permission(user_id):
     return flask.jsonify({"Message": f"User with id={user_id} does not exist!"}), 404
 @app.route("/add_students/", methods=['POST'])
 def add_students():
-    data = flask.request.files
+    data = flask.request.files['file']
+    # data.save(secure_filename(data.filename))
     return flask.jsonify({"hee":"only connection try"})
 #api.add_resource(UsersActions,"/users_actions/<string:user_id>/<string:user_name>")
 @app.route("/get_all_users")
@@ -88,9 +90,9 @@ def get_all():
     # # print(json.dumps(user_dict, indent=2))
     final=user.get_async("1")
     return flask.jsonify({"user name":final.user_name})
-@app.route("del/<string:user_id>",method=['DELETE'])
-def delet():
-    user=UserCRUD()
-    final=user.
+# @app.route("del/<string:user_id>",method=['DELETE'])
+# def delet():
+#     user=UserCRUD()
+    # final=user.
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port='8000', debug=True)
