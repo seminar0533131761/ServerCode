@@ -12,4 +12,3 @@ class TestView(FlaskView):
     # customized route
     # http://localhost:5000/diffrentname
         return "<h1>This is my custom route</h1>"
-TestView.register(app,route_base = '/')
