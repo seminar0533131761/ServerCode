@@ -12,7 +12,7 @@ from flask import Flask, request, jsonify
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager 
-from test_view import TestView
+# from test_view import TestView
 from dal.data_objects.user_crud import UserCRUD
 import asyncio
 mongo_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
@@ -148,6 +148,6 @@ def my_profile():
         "about" :"Hello! I'm a full stack developer that loves python and javascript"
     }
     return response_body
-TestView.register(app,route_base = '/')
+# TestView.register(app,route_base = '/')
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port='8000', debug=True)

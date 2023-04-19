@@ -1,4 +1,9 @@
+
+
 class Til:
     # veribal-מילולי
-    def __init__(self,_id,f_name,l_name,class_name,verbal_ability,logical_ability):
-        pass
+    def __init__(self,_id,class_name,verbal_ability,logical_ability):
+        self._id=_id
+        self.class_name = class_name
+        self.verbal_ability = verbal_ability
+        self.logical_ability = logical_ability
