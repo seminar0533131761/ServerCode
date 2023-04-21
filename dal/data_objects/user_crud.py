@@ -1,23 +1,19 @@
 from icrud import ICRUD
 from db_manger import DBManger
-from dal.data_objects.user import User
+from dal.models.user import User
 import pymongo
 import asyncio
 # from Idb_manger import IDBManger
-mongo_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
-my_data_base = mongo_client["Registration"]
+# mongo_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
+# my_data_base = mongo_client["Registration"]
 # users = my_data_base["users"]
 # global users
 class UserCRUD(ICRUD):
     #,users:DBManger
     def __init__(self):
-        # self.users=users.get_all_users()
         super().__init__()
-        # self.my_data_base=self.my_client["Registration"]
         self.users=self.my_data_base["users"]
         self.user={}
-        # self.users=[]
-        # self.users = super().my_client["Registration"]
     def create_async(self,obj):
         tmp_user=self.users.insert_one(obj)
         self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)

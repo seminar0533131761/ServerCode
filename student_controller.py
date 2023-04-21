@@ -1,4 +1,4 @@
-from dal.data_objects.user import User
+from dal.models.user import User
 import pymongo
 import flask
 from flask_cors import CORS,cross_origin
