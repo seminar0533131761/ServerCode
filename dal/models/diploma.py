@@ -1,6 +1,6 @@
 class Diploma:
-    def __init__(self,_id,math,english,torah,sciences,grammar,history,trend):
-        self._id=_id
+    def __init__(self,id,math,english,torah,sciences,grammar,history,trend):
+        self.id=id
         self.math=math
         self.english=english
         self.torah=torah

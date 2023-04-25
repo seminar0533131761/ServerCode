@@ -1,4 +1,4 @@
-from icrud import ICRUD
+from dal.data_objects.services.icrud import ICRUD
 from dal.models.user import User
 # import pymongo
 # my_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
@@ -10,13 +10,9 @@ class UserCRUD(ICRUD):
         self.users=self.my_data_base["users"]
         self.user={}
     def create_async(self,obj):
-        tmp_user=self.users.insert_one(obj)
-        self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
-        return self.user
+        pass
     def delete_async(self,id):
-        tmp_user=self.users.delete_one({"_id":id})
-        self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
-        return self.user
+        pass
     def update_async(self,id):
         tmp_user=self.users.find_one({"_id":id})
         if(tmp_user["permission"]=="super"):
