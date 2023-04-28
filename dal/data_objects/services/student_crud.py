@@ -25,6 +25,9 @@ class StudentCrud(ICRUD):
 
     def get_async(self, _id):
         tmp_student = self.students.find_one({"_id": 214088999})
+        print (self)
+        print (self.students)
+        print (tmp_student["_id"])
         self.student = Student(tmp_student["_id"], tmp_student["first_name"], tmp_student["last_name"],tmp_student["phone"])
         return self.student
     async def get_all_async(self):
