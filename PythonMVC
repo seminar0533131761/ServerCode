@@ -1,0 +1,73 @@
+# Example for a base model  
+from pymongo import MongoClient
+
+class BaseModel:
+    def __init__(self, mongo_client: MongoClient, db_name: str, collection_name: str):
+        self.collection = mongo_client[db_name][collection_name]
+
+    def find_all(self):
+        return list(self.collection.find())
+
+    def find_by_id(self, id):
+        return self.collection.find_one({'_id': id})
+
+    def create(self, data):
+        result = self.collection.insert_one(data)
+        return str(result.inserted_id)
+
+    def update(self, id, data):
+        result = self.collection.update_one({'_id': id}, {'$set': data})
+        return result.modified_count > 0
+
+    def delete(self, id):
+        result = self.collection.delete_one({'_id': id})
+        return result.deleted_count > 0
+        
+#Example for a specific model class StudentModel(BaseModel):
+
+    def __init__(self, mongo_client: MongoClient, db_name: str):
+        super().__init__(mongo_client, db_name, 'students')
+
+    def find_by_email(self, email):
+        return self.collection.find_one({'email': email})
+
+    # More collection-specific methods can be defined here
+    
+    
+# Example for the controller layer 
+
+from flask import Blueprint, jsonify, request
+
+from models.student import StudentModel
+
+students_api = Blueprint('students_api', __name__)
+
+@students_api.route('/students', methods=['POST'])
+def create_student():
+    # Parse the JSON request data
+    data = request.get_json()
+
+    # Validate the request data
+    if 'name' not in data or 'email' not in data:
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    # Create a new student object
+    new_student = StudentModel(name=data['name'], email=data['email'])
+
+    # Save the new student to the database
+    new_student_id = new_student.save()
+
+    # Return the new student ID in the response
+    return jsonify({'id': new_student_id}), 201
+    
+@students_api.route('/students/<int:student_id>', methods=['GET'])
+def get_student(student_id):
+    # Retrieve the student from the database
+    student = StudentModel.find_by_id(student_id)
+
+    # Check if the student exists
+    if not student:
+        return jsonify({'error': 'Student not found'}), 404
+
+    # Return the student data in the response
+    return jsonify(student.to_dict()), 200
