@@ -8,7 +8,3 @@ class Diploma:
         self.grammar=grammar
         self.history=history
         self.trend=trend
-
-    def __init__(self, id, math):
-        self.id = id
-        self.math = math
