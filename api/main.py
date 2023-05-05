@@ -62,14 +62,15 @@
 #     final=user.get_async(214088999)
 #     # final=users.find_one({"_id":214088999})
 #     return jsonify({"user name":final["user_name"]})
-import pymongo
 # my_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
 # my_data_base=my_client["Registration"]
 # users=my_data_base["users"]
 from api import create_app
+from flask_cors import CORS
 app=create_app()
+CORS(app)
 def check():
     pass
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port='8000', debug=True)
+    app.run(host='0.0.0.0', port='80', debug=True)

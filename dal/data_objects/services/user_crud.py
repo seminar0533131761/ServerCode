@@ -7,8 +7,8 @@ from dal.models.user import User
 class UserCRUD(ICRUD):
     def __init__(self):
         super().__init__()
-        self.users=self.my_data_base["users"]
-        self.user={}
+        self.users = self.my_data_base["users"]
+        self.user = {}
     def create_async(self,obj):
         pass
     def delete_async(self,id):
@@ -23,8 +23,9 @@ class UserCRUD(ICRUD):
         self.user=User(tmp_user.user_name,tmp_user._id,tmp_user.permmision)
         return self.user
     def get_async(self,_id):
-        tmp_user=self.users.find_one({"_id":_id})
-        self.user=User(tmp_user["user_name"],tmp_user["_id"],tmp_user["permission"])
+        # tmp_user=self.users.find_one({"_id":_id})
+        # self.user=User(tmp_user["user_name"],tmp_user["_id"],tmp_user["permission"])
+        self.user=User("chani","214088999","s")
         return self.user
     def get_all_async(self):
         pass

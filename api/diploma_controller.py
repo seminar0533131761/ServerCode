@@ -9,4 +9,4 @@ diploma_controller=Blueprint('diploma_controller', __name__)
 def get_diploma(diploma_id):
     diploma = DiplomaCRUD()
     final = diploma.get_async(diploma_id)
-    return jsonify({"diploma_id":final.id,"math":final.math,"torah":final.torah,"grammer":final.grammar,"english":final.english,"sciences":final.sciences,"history":final.history,"trend":final.trend})
+    return jsonify({"diploma_id":final.id,"math":final.math, "torah":final.torah, "grammer":final.grammar,"english":final.english,"sciences":final.sciences,"history":final.history,"trend":final.trend})
