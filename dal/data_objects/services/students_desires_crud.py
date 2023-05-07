@@ -18,7 +18,7 @@ class StudentsDesiresCrud(ICRUD):
     def get_async(self, _id):
         # tmp_preferences = self.preferences.find_one({"_id": _id})
         # self.my_preferences = StudentsDesires(tmp_preferences["_id"], tmp_preferences["preference1"],tmp_preferences["preference2"],tmp_preferences["recommendation1"],tmp_preferences["recommendation2"],tmp_preferences["final_answer"])
-        self.my_preferences = StudentsDesires("214088999", "math","history","good","good","math")
+        self.my_preferences = StudentsDesires("214088999", "math","history","to accept","not to accept","math")
         return self.my_preferences
 
     def get_all_async(self):

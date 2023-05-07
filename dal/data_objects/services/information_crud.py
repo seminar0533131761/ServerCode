@@ -26,6 +26,8 @@ class InformationCrud(ICRUD):
         # self.student_information = Information(tmp_student_information["_id"], tmp_student_information["educator_recommendation"],
         #                                        tmp_student_information["pricipal_recommendation"], tmp_student_information["til_analysis"],
         #                                        tmp_student_information["occupational_counseling"])
-        self.student_information = Information("214088999", "chani", "ortal", "0533113333","aaaaa")
+
+        self.student_information = Information("214088999", "great student has nothing what to improve", "she does not really like history",
+                                               "the til is basically good but show more variably ability","did not go to occupational counseling")
         return self.student_information
 

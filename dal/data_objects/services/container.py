@@ -1,5 +1,5 @@
-from dependency_injector import containers, providers
-from dependency_injector.wiring import inject, Provide
+# from dependency_injector import containers, providers
+# from dependency_injector.wiring import inject, Provide
 from dal.models.user import User
 class Container(containers.DeclarativeContainer):
 

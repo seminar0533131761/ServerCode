@@ -8,7 +8,7 @@ til_controller = Blueprint('til_controller', __name__)
 def get_til(user_id):
     til = TilCRUD()
     final = til.get_async(user_id)
-    return jsonify({ "_id": final._id,
+    return jsonify({"_id": final._id,
                     "class_name": final.class_name,
                     "verbal_ability": final.verbal_ability,
                     "logical_ability": final.logical_ability})

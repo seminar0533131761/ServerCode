@@ -9,4 +9,4 @@ user_controller=Blueprint('user_controller',__name__)
 def get_user(user_id):
     user=UserCRUD()
     final=user.get_async(user_id)
-    return jsonify({"user_name":final.user_name,"user_id":final.id})
+    return jsonify({"name":final.user_name,"id":final.id,"permission":final.permmision})
