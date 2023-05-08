@@ -1,3 +1,4 @@
+from api import training_controller
 from api.diploma_controller import diploma_controller
 # from api.information_controller import information_controller
 from api.class_controller import class_controller
@@ -17,5 +18,5 @@ def create_app():
     app.register_blueprint(information_controller,url_prefix='/information_controller/')
     app.register_blueprint(til_controller,url_prefix='/til_controller/')
     app.register_blueprint(class_controller, url_prefix='/class_controller/')
-
+    app.register_blueprint(training_controller,url_prefix='/training_controller')
     return app

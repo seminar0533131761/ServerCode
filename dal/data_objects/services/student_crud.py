@@ -8,7 +8,7 @@ class StudentCrud(ICRUD):
         # lst of mongo db collection
         self.students = self.my_data_base["students"]
         # lst of instances of class student
-        self.obj_students = []
+        self.obj_students=[]
         self.student = {}
 
     def create_async(self, obj):
@@ -39,8 +39,10 @@ class StudentCrud(ICRUD):
         pass
 
     def get_student_by_class_name(self, class_name):
-        self.obj_students.extend([Student("1", "rivi", "dryman", "0369202", "a1"),
-                                  Student("2", "chani", "chalamish", "054768322", "a1"),
-                                  Student("3", "chavi", "chif", "0572322", "a2")])
-        filtered = filter(lambda class_n: class_n == class_name, self.obj_students)
-        return list(filtered)
+        self.obj_students.extend([Student("214088999", "rivi", "dryman", "0369202", "a1"),
+                                  Student("214088999", "chani", "chalamish", "054768322", "a1"),
+                                  Student("214088999", "chavi", "chif", "0572322", "a1")])
+        specified_class=[i for i in self.obj_students if i.class_name==class_name]
+        print(list(specified_class[0].class_name))
+        return specified_class
+

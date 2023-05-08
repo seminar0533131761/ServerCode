@@ -23,7 +23,7 @@ class TilCRUD(ICRUD):
     def get_async(self, _id):
         # tmp_til = self.tiles.find_one({"_id": _id})
         # self.til = Til(tmp_til["class_name"], tmp_til["_id"], tmp_til["verbal_ability"], tmp_til["logical_ability"])
-        self.til = Til("214088999", "a", "good", "good")
+        self.til = Til("214088999", "a", "good", "good", "600")
         return self.til
 
     def get_all_async(self):
