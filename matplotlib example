@@ -1,0 +1,19 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate dummy data
+months = np.arange(1, 13)
+data = np.random.randint(10, 100, size=12)
+
+# Plot the data
+plt.plot(months, data)
+plt.xlabel('Months')
+plt.ylabel('Data')
+plt.title('Monthly Data')
+
+# Customize the x-axis tick labels
+month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+plt.xticks(months, month_names)
+
+# Display the plot
+plt.show()
