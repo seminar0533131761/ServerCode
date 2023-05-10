@@ -1,4 +1,4 @@
-from dal.data_objects.services.icrud import ICRUD
+from dal.data_objects.services.basemodel import BaseModel
 from dal.models.user import User
 
 
@@ -6,11 +6,19 @@ from dal.models.user import User
 # my_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
 # my_data_base=my_client["Registration"]
 # users=my_data_base["users"]
-class UserCRUD(ICRUD):
+class UserCRUD(BaseModel):
     def __init__(self):
-        super().__init__()
-        self.users = self.my_data_base["users"]
-        self.user = {}
+        super(UserCRUD, self).__init__()
+        self.users = self.my_db["users"]
+        if "users" in self.my_db.list_collection_names():
+            print("The collection exists.")
+
+    # users = None
+    #
+    # def __new__(cls, *args, **kwargs):
+    #     if not isinstance(cls.users, cls):
+    #         cls.users = BaseModel.client["users"]
+    #     return BaseModel.__new__(cls)
 
     def create_async(self, obj):
         pass
@@ -37,3 +45,16 @@ class UserCRUD(ICRUD):
     def get_all_async(self):
         pass
 
+# class A(object):
+#     def __new__(cls):
+#         print("Creating instance")
+#
+#
+#     def __init__(self):
+#         print("Init is called")
+#
+# class B(A):
+#     def __init__(self):
+#         super(B, self).__init__()
+#         print("Init B is called")
+# a = A()

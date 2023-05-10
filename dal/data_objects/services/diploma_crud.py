@@ -1,11 +1,11 @@
-from dal.data_objects.services.icrud import ICRUD
+from dal.data_objects.services.basemodel import BaseModel
 from dal.models.diploma import Diploma
 
 
-class DiplomaCRUD(ICRUD):
+class DiplomaCRUD(BaseModel):
     def __init__(self):
         super().__init__()
-        self.diplomas=self.my_data_base["diploma"]
+        self.diplomas=self.my_db["diploma"]
         self.diploma={}
     def create_async(self,obj):
         pass

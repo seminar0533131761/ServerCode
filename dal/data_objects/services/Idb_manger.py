@@ -1,3 +1,0 @@
-
-# class IDBManger():
-#     self.users=[]

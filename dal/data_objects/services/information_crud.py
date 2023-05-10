@@ -1,11 +1,11 @@
-from dal.data_objects.services.icrud import ICRUD
+from dal.data_objects.services.basemodel import BaseModel
 from dal.models.information import Information
 
 
-class InformationCrud(ICRUD):
+class InformationCrud(BaseModel):
     def __init__(self):
         super().__init__()
-        self.students_information = self.my_data_base["information"]
+        self.students_information = self.my_db["information"]
         self.student_information = {}
 
     def create_async(self, obj):

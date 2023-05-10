@@ -14,8 +14,8 @@ def get_user(student_id):
          "final_answer": final.final_answer})
 
 
-@student_desires_controller.route("get_final_answer/<class_name>")
-def get_final_answer(class_name):
+@student_desires_controller.route("get_final_answer_by_class/<class_name>")
+def get_final_answer_by_class(class_name):
     student_desires = StudentsDesiresCrud()
     final = student_desires.get_final_answer_by_class_name(class_name)
     new_lst = []
@@ -23,4 +23,14 @@ def get_final_answer(class_name):
         new_lst.append(
             {"final_answer": desire.final_answer})
     return jsonify(new_lst)
-    # return jsonify({"hi":"there"})
+
+
+@student_desires_controller.route("get_final_answer_by_training/<training_name>")
+def get_final_answer_by_training(training_name):
+    student_desires = StudentsDesiresCrud()
+    final = student_desires.get_final_answer_by_training(training_name)
+    new_lst = []
+    for desire in final:
+        new_lst.append(
+            {"student id": desire.id, "final_answer": desire.final_answer})
+    return jsonify(new_lst)

@@ -1,4 +1,4 @@
-from dal.data_objects.services.icrud import ICRUD
+from dal.data_objects.services.basemodel import BaseModel
 from dal.models.til import Til
 
 
@@ -6,10 +6,10 @@ from dal.models.til import Til
 # my_client = pymongo.MongoClient("mongodb+srv://chani:registration@database.ukagb6v.mongodb.net/?retryWrites=true&w=majority")
 # my_data_base=my_client["Registration"]
 # users=my_data_base["users"]
-class TilCRUD(ICRUD):
+class TilCRUD(BaseModel):
     def __init__(self):
         super().__init__()
-        self.tiles = self.my_data_base["til"]
+        self.tiles = self.my_db["til"]
         self.til = {}
 
     def create_async(self, obj):

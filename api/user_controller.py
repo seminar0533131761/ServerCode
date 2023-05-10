@@ -6,6 +6,7 @@ from dal.data_objects.services.user_crud import UserCRUD
 user_controller=Blueprint('user_controller',__name__)
 
 @user_controller.route("get_by_id/<int:user_id>")
+
 def get_user(user_id):
     user=UserCRUD()
     final=user.get_async(user_id)
