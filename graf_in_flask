@@ -1,0 +1,55 @@
+import React, { useEffect, useState } from 'react';
+
+function PlotComponent() {
+    const [plotImage, setPlotImage] = useState('');
+
+    useEffect(() => {
+        // Make an HTTP request to the Flask API endpoint
+        fetch('/plot')
+            .then(response => response.blob())
+            .then(imageData => {
+                const objectURL = URL.createObjectURL(imageData);
+                setPlotImage(objectURL);
+            });
+
+        return () => {
+            // Clean up the object URL when the component unmounts
+            URL.revokeObjectURL(plotImage);
+        };
+    }, []);
+
+    return (
+        <div>
+            {plotImage && <img src={plotImage} alt="Plot" />}
+        </div>
+    );
+}
+
+export default PlotComponent;
+
+import matplotlib.pyplot as plt
+import io
+from flask import Flask, send_file
+
+app = Flask(__name__)
+
+@app.route('/plot')
+def generate_plot():
+    # Generate your matplotlib graph
+    x = [1, 2, 3, 4, 5]
+    y = [1, 4, 9, 16, 25]
+    plt.plot(x, y)
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Plot Title')
+
+    # Save the graph as an image file
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+
+    # Return the image file as a response
+    return send_file(buffer, mimetype='image/png')
+
+if __name__ == '__main__':
+    app.run()
