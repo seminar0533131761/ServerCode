@@ -4,8 +4,8 @@ from dal.models.information import Information
 
 class InformationCrud(BaseModel):
     def __init__(self):
-        super().__init__()
-        self.students_information = self.my_db["information"]
+        super(InformationCrud,self).__init__()
+        # self.students_information = self.my_db["information"]
         self.student_information = {}
 
     def create_async(self, obj):

@@ -6,9 +6,9 @@ from dal.models.student import Student
 
 class StudentCrud(BaseModel):
     def __init__(self):
-        super().__init__()
+        super(StudentCrud,self).__init__()
         # lst of mongo db collection
-        self.students = self.my_db["students"]
+        # self.students = self.my_db["students"]
         # lst of instances of class student
         self.obj_students = []
         self.student = {}

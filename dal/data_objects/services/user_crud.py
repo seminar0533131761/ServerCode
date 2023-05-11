@@ -1,5 +1,7 @@
 from dal.data_objects.services.basemodel import BaseModel
 from dal.models.user import User
+import csv
+import pandas as pd
 
 
 # import pymongo
@@ -9,16 +11,13 @@ from dal.models.user import User
 class UserCRUD(BaseModel):
     def __init__(self):
         super(UserCRUD, self).__init__()
-        self.users = self.my_db["users"]
-        if "users" in self.my_db.list_collection_names():
-            print("The collection exists.")
-
-    # users = None
-    #
-    # def __new__(cls, *args, **kwargs):
-    #     if not isinstance(cls.users, cls):
-    #         cls.users = BaseModel.client["users"]
-    #     return BaseModel.__new__(cls)
+        # self.users = self.my_db["users"]
+        self.user = {}
+        self.users = []
+        df = pd.read_csv('users.csv')
+        ls = df.T.to_dict().values()
+        for i in ls:
+            self.users.append(User(i["id"], i["user_name"], i["permission"]))
 
     def create_async(self, obj):
         pass
@@ -39,22 +38,14 @@ class UserCRUD(BaseModel):
     def get_async(self, _id):
         # tmp_user=self.users.find_one({"_id":_id})
         # self.user=User(tmp_user["user_name"],tmp_user["_id"],tmp_user["permission"])
-        self.user = User("chani", "214088999", "super")
-        return self.user
+        for i in self.users:
+            if i.id == "214088999":
+                self.user = User(i.id, i.user_name, i.permmision)
+                return self.user
 
     def get_all_async(self):
         pass
 
-# class A(object):
-#     def __new__(cls):
-#         print("Creating instance")
-#
-#
-#     def __init__(self):
-#         print("Init is called")
-#
-# class B(A):
-#     def __init__(self):
-#         super(B, self).__init__()
-#         print("Init B is called")
-# a = A()
+
+a = UserCRUD()
+print(a.get_async("214088999"))

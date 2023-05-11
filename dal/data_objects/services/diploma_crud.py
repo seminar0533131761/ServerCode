@@ -4,8 +4,8 @@ from dal.models.diploma import Diploma
 
 class DiplomaCRUD(BaseModel):
     def __init__(self):
-        super().__init__()
-        self.diplomas=self.my_db["diploma"]
+        super(DiplomaCRUD,self).__init__()
+        # self.diplomas=self.my_db["diploma"]
         self.diploma={}
     def create_async(self,obj):
         pass

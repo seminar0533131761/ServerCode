@@ -8,8 +8,8 @@ from dal.models.til import Til
 # users=my_data_base["users"]
 class TilCRUD(BaseModel):
     def __init__(self):
-        super().__init__()
-        self.tiles = self.my_db["til"]
+        super(TilCRUD,self).__init__()
+        # self.tiles = self.my_db["til"]
         self.til = {}
 
     def create_async(self, obj):

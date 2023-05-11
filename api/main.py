@@ -1,4 +1,3 @@
-
 # # @app.route('/users/<user_id>', methods=['GET'])
 # # def get_user_by_id(user_id):
 # #     user=users.find_one({"id":214088999})
@@ -67,10 +66,14 @@
 # users=my_data_base["users"]
 from api import create_app
 from flask_cors import CORS
-app=create_app()
+
+app = create_app()
 CORS(app)
+
+
 def check():
     pass
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='80', debug=True)

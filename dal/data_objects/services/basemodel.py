@@ -17,16 +17,17 @@ class BaseModel:
     client = None
 
     def __init__(self):
-        if not isinstance(BaseModel.client, BaseModel) and not BaseModel.client:
-            BaseModel.client = MongoClient(uri, server_api=ServerApi('1'))
+        pass
+        # if not isinstance(BaseModel.client, BaseModel) and not BaseModel.client:
+        # BaseModel.client = MongoClient(uri, server_api=ServerApi('1'))
             # Send a ping to confirm a successful connection
-            try:
-                BaseModel.client.admin.command('ping')
-                print("Pinged your deployment. You successfully connected to MongoDB!")
+            # try:
+            #     BaseModel.client.admin.command('ping')
+            #     print("Pinged your deployment. You successfully connected to MongoDB!")
 
-                self.my_db = BaseModel.client['Cluster0']
-            except Exception as e:
-                print(e)
+        # self.my_db = BaseModel.client['Cluster0']
+            # except Exception as e:
+            #     print(e)
 
     # def __init__(self):
     #     print('init')

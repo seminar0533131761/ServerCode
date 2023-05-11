@@ -13,3 +13,8 @@ def get_til(user_id):
                     "verbal_ability": final.verbal_ability,
                     "logical_ability": final.logical_ability,
                     "final_mark": final.final_mark})
+    # return jsonify({"_id": "214088999",
+    #                 "class_name": "a1",
+    #                 "verbal_ability": "good",
+    #                 "logical_ability": "good",
+    #                 "final_mark": "400"})

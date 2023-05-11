@@ -23,7 +23,7 @@ root = Tk()
 plt.rcParams["figure.figsize"] = [7.50, 3.50]
 plt.rcParams["figure.autolayout"] = True
 
-@graf_controller.route('number_of_students_in_each_training/')
+@graf_controller.route('number_of_students_in_each_training')
 def number_of_students_in_each_training():
     months = np.arange(1, 8)
     data = np.array([6,12,4,76,44,23,12])
