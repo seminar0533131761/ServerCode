@@ -1,3 +1,17 @@
+#append row
+new_row = {'id': 123456, 'user_name': 'JohnDoe', 'permission': 'regular'}
+df = df.append(new_row, ignore_index=True)
+#del row
+row_to_delete = df[df['id'] == 123456].index
+df = df.drop(row_to_delete)
+df.to_csv('users.csv', index=False)
+#update row with specified id
+row_index = df.index[df['id'] == 123456]
+df.loc[row_index, 'user_name'] = 'yhuda'
+df.loc[row_index, 'permission'] = 'orthal'
+df.to_csv('users.csv', index=False)
+df.to_csv('users.csv', index=False)
+##############
 import React, { useEffect, useState } from 'react';
 
 function PlotComponent() {
