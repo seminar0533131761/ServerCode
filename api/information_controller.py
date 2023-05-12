@@ -10,6 +10,6 @@ def get_information(user_id):
     final = information.get_async(user_id)
     return jsonify({"id": final.id,
                     "educator_recommendation": final.educator_recommendation,
-                    "principal_recommendation": final.pricipal_recommendation,
-                    "til_analysis": final.til_analysis,
+                    # "principal_recommendation": final.pricipal_recommendation,
+                    # "til_analysis": final.til_analysis,
                     "occupational_counseling": final.occupational_counseling})

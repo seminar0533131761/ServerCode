@@ -6,14 +6,11 @@ student_controller = Blueprint('student_controller', __name__)
 
 @student_controller.route("get_by_id/<int:student_id>")
 def get_student(student_id):
-    # student = StudentCrud()
-    # final = student.get_async(student_id)
-    # return jsonify(
-    #     {"first_name": final.first_name, "last_name": final.last_name, "student_id": final.id, "phone": final.phone,
-    #      "class": final.class_name})
+    student = StudentCrud()
+    final = student.get_async(student_id)
     return jsonify(
-        {"first_name": "chani", "last_name": "ortal", "student_id": "214088999",
-         "phone": "0533131761", "class": "a1"})
+        {"first_name": final.first_name, "last_name": final.last_name, "student_id": final.id, "phone": final.phone,
+         "class": final.class_name})
 
 
 @student_controller.route("get_by_class_name/<class_name>")
