@@ -26,14 +26,33 @@ def get_students_by_class(class_name):
     return jsonify(new_lst)
 
 
+
+
 @student_controller.route("get_by_training/<training_name>")
 def get_student_by_training(training_name):
     student = StudentCrud()
-    final = student.get_students_by_training(training_name)
-    new_lst = []
-    for student in final:
-        new_lst.append(
-            {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
-             "phone": student.phone,
-             "class": student.class_name})
-    return jsonify(new_lst)
+    final = student.get_students_and_desires_by_training(training_name)
+    # json_lst=[]
+    # for student in final:
+    #     json_lst.append(
+    #         {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
+    #          "phone": student.phone,
+    #          "class": student.class_name})
+    json_list=list(final)
+    # return jsonify(json_lst)
+    return jsonify(json_list)
+@student_controller.route("get_by_class/<class_name>")
+def get_student_by_class(class_name):
+    student = StudentCrud()
+    final = student.get_students_and_desires_by_class(class_name)
+    # json_lst=[]
+    # for student in final:
+    #     json_lst.append(
+    #         {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
+    #          "phone": student.phone,
+    #          "class": student.class_name})
+    json_list=list(final)
+    # return jsonify(json_lst)
+    return jsonify(json_list)
+
+

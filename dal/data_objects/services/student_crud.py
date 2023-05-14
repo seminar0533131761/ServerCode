@@ -56,18 +56,28 @@ class StudentCrud(BaseModel):
         specified_class = [i for i in self.obj_students if i.class_name == class_name]
         print(list(specified_class[0].class_name))
         return specified_class
-    # circular import
-    # def get_students_by_training(self, training_name):
-    #     student_desire=StudentsDesiresCrud()
-    #     student=StudentCrud()
-    #     students=[]
-    #     students_in_same_training=student_desire.get_final_answer_by_training(training_name)
-    #     for student_desire in students_in_same_training:
-    #         students.append(student.get_async(student_desire.id))
-    #     return students
-    # self.obj_students.extend([Student("214088999", "rivi", "dryman", "0369202", "a1"),
-    #                           Student("214088999", "chani", "chalamish", "054768322", "a1"),
-    #                           Student("214088999", "chavi", "chif", "0572322", "a1")])
-    # specified_training = [i for i in self.obj_students if i.class_name == training_name]
-    # print(list(specified_class[0].class_name))
-    # return specified_class
+    def get_students_and_desires_by_training(self,tranining):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path1 = os.path.join(my_path, "../../../api/csvs/students.csv")
+        s=pd.read_csv(path1)
+        path2 = os.path.join(my_path, "../../../api/csvs/students_desires.csv")
+        d = pd.read_csv(path2)
+        merged_df = pd.merge(s, d, on='id')
+        filtered_df = merged_df[merged_df['final_answer'] == tranining]
+        # filtered_df.to_csv('filtered_data.csv', index=False)
+        # f=pd.read_csv('filtered_data.csv')
+        return filtered_df.T.to_dict().values()
+    def get_students_and_desires_by_class(self,class_name):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path1 = os.path.join(my_path, "../../../api/csvs/students.csv")
+        s = pd.read_csv(path1)
+        path2 = os.path.join(my_path, "../../../api/csvs/students_desires.csv")
+        d = pd.read_csv(path2)
+        merged_df = pd.merge(s, d, on='id')
+        filtered_df = merged_df[merged_df['class_name'] == class_name]
+        return filtered_df.T.to_dict().values()
+
+
+
+s=StudentCrud()
+print(s.get_students_and_desires_by_training("math"))

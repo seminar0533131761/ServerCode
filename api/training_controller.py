@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from dal.data_objects.services.students_desires_crud import StudentsDesiresCrud
+# from dal.data_objects.services.students_desires_crud import StudentsDesiresCrud
 
 training_controller = Blueprint('training_controller', __name__)
 

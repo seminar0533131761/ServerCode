@@ -3,6 +3,7 @@ from dal.data_objects.services.student_crud import StudentCrud
 from dal.models.students_desires import StudentsDesires
 import pandas as pd
 import os.path
+from dal.models.traing_options import TrainingOptions
 
 class StudentsDesiresCrud(BaseModel):
     def __init__(self):
@@ -10,7 +11,7 @@ class StudentsDesiresCrud(BaseModel):
         # # self.preferences = self.my_db["preferences"]
         # self.obj_students_desires = []
         # self.my_preferences = {}
-        super().__init__(self)
+        super().__init__()
         self.student_desires = {}
         self.students_desires = []
         my_path = os.path.abspath(os.path.dirname(__file__))
@@ -59,3 +60,20 @@ class StudentsDesiresCrud(BaseModel):
         specified_training = [i for i in self.obj_students_desires if i.final_answer == training_name]
         print(list(specified_training))
         return specified_training
+
+    def how_many_on_each_trainig(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path, "../../../api/csvs/students_desires.csv")
+        d = pd.read_csv(path)
+        count_students_in_each_opt = dict()
+        for opt in TrainingOptions:
+            name = opt.name
+            sum_per_opt = (d['final_answer'] == name).sum()
+            mew_value = {name: int(sum_per_opt)}
+            count_students_in_each_opt.update(mew_value)
+        opts_name = list(count_students_in_each_opt.keys())
+        opts_sum = list(count_students_in_each_opt.values())
+        return opts_name,opts_sum
+
+d=StudentsDesiresCrud()
+d.how_many_on_each_trainig()

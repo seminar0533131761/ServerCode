@@ -9,7 +9,8 @@ from pymongo.server_api import ServerApi
 
 username = quote_plus('chani')
 password = quote_plus('chani113')
-uri = f"mongodb+srv://{username}:{password}@cluster0.7v5y8rk.mongodb.net/?retryWrites=true&w=majority"
+uri = f"mongodb+srv://{username}:{password}@cluster0.q5byjr3.mongodb.net/?retryWrites=true&w=majority"
+
 
 
 class BaseModel:

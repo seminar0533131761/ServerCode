@@ -10,7 +10,7 @@ import os.path
 # users=my_data_base["users"]
 class TilCRUD(BaseModel):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
         # super(TilCRUD,self).__init__()
         # self.tiles = self.my_db["til"]
         self.til = {}
