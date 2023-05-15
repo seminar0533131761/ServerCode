@@ -3,35 +3,19 @@ from dal.models.diploma import Diploma
 import pandas as pd
 import os.path
 
-
 class DiplomaCRUD(BaseModel):
     def __init__(self):
-        # super(DiplomaCRUD,self).__init__()
-        # self.diplomas=self.my_db["diploma"]
-        # self.diploma={}
         super().__init__()
         self.diploma = {}
         self.diplomas = []
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(my_path, "../../../api/csvs/diploma.csv")
-        self.df = pd.read_csv(path)
+        self.my_path = os.path.abspath(os.path.dirname(__file__))
+        self.path = os.path.join(self.my_path, "../../../api/csvs/diploma.csv")
+        self.df = pd.read_csv(self.path)
 
     def create_async(self, obj):
         pass
 
-    def delete_async(self, id):
-        pass
-
-    def update_async(self, obj):
-        pass
-
-    def get_all_async(self):
-        pass
-
     def get_async(self, id):
-        # tmp_diploma=self.diplomas.find_one({"_id":id})
-        # self.diploma=Diploma(tmp_diploma["_id"],tmp_diploma["math"],tmp_diploma["english"],tmp_diploma["torah"],tmp_diploma["sciences"],tmp_diploma["grammar"],tmp_diploma["history"],tmp_diploma["trend"])
-        # return self.diploma
         int_id = int(id)
         row = self.df.loc[self.df['id'] == int_id]
         st = row.to_string(header=False, index=False)
@@ -40,13 +24,10 @@ class DiplomaCRUD(BaseModel):
         return self.diploma
 
     def compare_students_grades(self, student1_id, student2_id):
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(my_path, "../../../api/csvs/diploma.csv")
-        g = pd.read_csv(path)
-        student1 = g[(g['id'] == student1_id)]
-        student2 = g[(g['id'] == student2_id)]
-        subjects = list(g.columns)
-        # the first col is the idd and the last is the trend
+        student1 = self.df[(self.df['id'] == int(student1_id))]
+        student2 = self.df[(self.df['id'] == int(student2_id))]
+        subjects = list(self.df.columns)
+        # the first col is the id and the last are the trend
         subjects = subjects[1:-1]
         student1_lst_of_dicts = student1.to_dict().values()
         student2_lst_of_dicts = student2.to_dict().values()
@@ -58,7 +39,3 @@ class DiplomaCRUD(BaseModel):
         student1_grades = [int(i[0]) for i in correct_student1_and_id]
         student2_grades = [int(i[0]) for i in correct_student2_and_id]
         return student1_grades, student2_grades, subjects
-
-
-a = DiplomaCRUD()
-print(a.compare_students_grades(343553777, 558888922))

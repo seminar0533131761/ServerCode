@@ -12,19 +12,20 @@ class StudentCrud(BaseModel):
         # lst of mongo db collection
         # self.students = self.my_db["students"]
         # lst of instances of class student
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(my_path, "../../../api/csvs/students.csv")
-        self.df = pd.read_csv(path)
+        self.my_path = os.path.abspath(os.path.dirname(__file__))
+        self.path = os.path.join(self.my_path, "../../../api/csvs/students.csv")
+        self.df = pd.read_csv(self.path)
         self.obj_students = []
         self.student = {}
 
     # def __new__(cls, *args, **kwargs):
     #     return BaseModel.__new__(cls)
-    def create_async(self, obj):
-        # tmp_user = self.users.insert_one(obj)
-        # self.user = User(tmp_user.user_name, tmp_user._id, tmp_user.permission)
-        # return self.user
-        pass
+    def create_async(self, nw_students):
+        try:
+            df_combined = self.df._append(nw_students, ignore_index=True)
+            df_combined.to_csv(self.path)
+        except FileNotFoundError as not_found:
+            print("file not exists, ", not_found)
 
     def delete_async(self, id):
         # tmp_user = self.users.delete_one({"_id": id})
@@ -56,10 +57,11 @@ class StudentCrud(BaseModel):
         specified_class = [i for i in self.obj_students if i.class_name == class_name]
         print(list(specified_class[0].class_name))
         return specified_class
-    def get_students_and_desires_by_training(self,tranining):
+
+    def get_students_and_desires_by_training(self, tranining):
         my_path = os.path.abspath(os.path.dirname(__file__))
         path1 = os.path.join(my_path, "../../../api/csvs/students.csv")
-        s=pd.read_csv(path1)
+        s = pd.read_csv(path1)
         path2 = os.path.join(my_path, "../../../api/csvs/students_desires.csv")
         d = pd.read_csv(path2)
         merged_df = pd.merge(s, d, on='id')
@@ -67,7 +69,8 @@ class StudentCrud(BaseModel):
         # filtered_df.to_csv('filtered_data.csv', index=False)
         # f=pd.read_csv('filtered_data.csv')
         return filtered_df.T.to_dict().values()
-    def get_students_and_desires_by_class(self,class_name):
+
+    def get_students_and_desires_by_class(self, class_name):
         my_path = os.path.abspath(os.path.dirname(__file__))
         path1 = os.path.join(my_path, "../../../api/csvs/students.csv")
         s = pd.read_csv(path1)
@@ -78,6 +81,5 @@ class StudentCrud(BaseModel):
         return filtered_df.T.to_dict().values()
 
 
-
-s=StudentCrud()
+s = StudentCrud()
 print(s.get_students_and_desires_by_training("math"))

@@ -9,7 +9,6 @@ graf_controller = Blueprint('graf_controller', __name__)
 
 import io
 from flask import send_file
-
 import matplotlib.pyplot as plt
 
 matplotlib.use('agg')
@@ -31,12 +30,10 @@ plt.rcParams["figure.autolayout"] = True
 
 @graf_controller.route('number_of_students_in_each_training/<int:rand_num>')
 def number_of_students_in_each_training(rand_num):
-    print("traininggggggg")
-    d=StudentsDesiresCrud()
-    opt_names,opt_amount=d.how_many_on_each_trainig()
+    d = StudentsDesiresCrud()
+    opt_names, opt_amount = d.how_many_on_each_trainig()
     subjects = np.arange(1, 7)
-    # data = np.array([6, 12, 4, 76, 44, 23, 12])
-    data=opt_amount
+    data = opt_amount
     plt.plot(subjects, data)
     plt.xlabel('subjects')
     plt.ylabel('number of students')
@@ -47,15 +44,15 @@ def number_of_students_in_each_training(rand_num):
     buffer = io.BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
-
     # Return the plot as a response
     return send_file(buffer, mimetype='image/png')
 
+
 # /<int:student1_id>/<int:student2_id>
-@graf_controller.route("compare_students_grades")
-def compare_students_grades(student1_id=343553777, student2_id=558888922):
-    print("studentssssss")
+@graf_controller.route("compare_students_grades/<student1_id>/<student2_id>")
+def compare_students_grades(student1_id, student2_id):
     diploma = DiplomaCRUD()
+    print(student1_id,student2_id)
     student1_grades, student2_grades, subjects = diploma.compare_students_grades(student1_id, student2_id)
     # create plot
     fig, ax = plt.subplots()
@@ -71,15 +68,16 @@ def compare_students_grades(student1_id=343553777, student2_id=558888922):
     plt.ylabel('Scores')
     plt.title('Scores in each subject')
     plt.xticks(X + (bar_width / 2), (subjects[0], subjects[1], subjects[2], subjects[3],
-                                     subjects[4],subjects[5]))
+                                     subjects[4], subjects[5]))
 
     buffer = io.BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
-    response=make_response(send_file(buffer, mimetype='image/png'))
+    response = make_response(send_file(buffer, mimetype='image/png'))
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragme'] = 'no-cache'
     response.headers['Expires'] = 'O'
-    return  response
+    return response
+
 
 root = Tk()

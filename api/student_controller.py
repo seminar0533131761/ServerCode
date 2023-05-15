@@ -1,5 +1,8 @@
-from flask import Blueprint, jsonify
+import os
+
+from flask import Blueprint, jsonify, request
 from dal.data_objects.services.student_crud import StudentCrud
+import pandas as pd
 
 student_controller = Blueprint('student_controller', __name__)
 
@@ -26,8 +29,6 @@ def get_students_by_class(class_name):
     return jsonify(new_lst)
 
 
-
-
 @student_controller.route("get_by_training/<training_name>")
 def get_student_by_training(training_name):
     student = StudentCrud()
@@ -38,9 +39,11 @@ def get_student_by_training(training_name):
     #         {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
     #          "phone": student.phone,
     #          "class": student.class_name})
-    json_list=list(final)
+    json_list = list(final)
     # return jsonify(json_lst)
     return jsonify(json_list)
+
+
 @student_controller.route("get_by_class/<class_name>")
 def get_student_by_class(class_name):
     student = StudentCrud()
@@ -51,8 +54,20 @@ def get_student_by_class(class_name):
     #         {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
     #          "phone": student.phone,
     #          "class": student.class_name})
-    json_list=list(final)
+    json_list = list(final)
     # return jsonify(json_lst)
     return jsonify(json_list)
 
 
+@student_controller.route("/add_students", methods=['POST'])
+def process_upload():
+    print("fghjk")
+    file = request.files['file']
+    # Read the CSV file using pandas
+    nw_students = pd.read_csv(file)
+    student=StudentCrud()
+    student.create_async(nw_students)
+
+    # Return a response (optional)
+    response_data = {'message': 'File uploaded and processed'}
+    return jsonify(response_data)
