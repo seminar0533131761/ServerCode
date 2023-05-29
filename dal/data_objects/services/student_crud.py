@@ -55,17 +55,17 @@ class StudentCrud(BaseModel):
                                   Student("214088999", "chani", "chalamish", "054768322", "a1"),
                                   Student("214088999", "chavi", "chif", "0572322", "a1")])
         specified_class = [i for i in self.obj_students if i.class_name == class_name]
-        print(list(specified_class[0].class_name))
+        # print(list(specified_class[0].class_name))
         return specified_class
 
-    def get_students_and_desires_by_training(self, tranining):
+    def get_students_and_desires_by_training(self, training):
         my_path = os.path.abspath(os.path.dirname(__file__))
         path1 = os.path.join(my_path, "../../../api/csvs/students.csv")
         s = pd.read_csv(path1)
         path2 = os.path.join(my_path, "../../../api/csvs/students_desires.csv")
         d = pd.read_csv(path2)
         merged_df = pd.merge(s, d, on='id')
-        filtered_df = merged_df[merged_df['final_answer'] == tranining]
+        filtered_df = merged_df[merged_df['final_answer'] == training]
         # filtered_df.to_csv('filtered_data.csv', index=False)
         # f=pd.read_csv('filtered_data.csv')
         return filtered_df.T.to_dict().values()
