@@ -3,6 +3,7 @@ from dal.models.diploma import Diploma
 import pandas as pd
 import os.path
 
+
 class DiplomaCRUD(BaseModel):
     def __init__(self):
         super().__init__()
@@ -39,3 +40,23 @@ class DiplomaCRUD(BaseModel):
         student1_grades = [int(i[0]) for i in correct_student1_and_id]
         student2_grades = [int(i[0]) for i in correct_student2_and_id]
         return student1_grades, student2_grades, subjects
+
+    def add_diploma(self, nw_students):
+        try:
+            diplomas = []
+            for index, row in nw_students.iterrows():
+                student_diploma = Diploma(row["id"], row["math"], row["english"], row["torah"], row["sciences"],
+                                          row["grammar"], row["history"], row["trend"])
+                diplomas.append(student_diploma)
+            print(diplomas)
+            for row in diplomas:
+                new_student = {"id": int(row.id), "math": row.math, "english": row.english,
+                               "torah": row.torah, "sciences": row.sciences, "grammar": row.grammar,
+                               "history": row.history, "trend": row.trend}
+                self.df = self.df._append(new_student, ignore_index=True)
+
+            self.df.to_csv(self.path, index=False)
+            return True
+        except Exception as err:
+            print(err)
+            return False

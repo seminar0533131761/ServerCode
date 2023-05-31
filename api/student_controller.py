@@ -15,8 +15,6 @@ def get_student(student_id):
         return jsonify({"message": "id must contains only numbers"}), 400
     student = StudentCrud()
     final = student.get_async(student_id)
-    print(final)
-    print(final.id)
     if "Empty" == final.id:
         return jsonify({"message": "student does not exits"}), 400
     return jsonify(
@@ -74,15 +72,14 @@ def get_student_by_class(class_name):
     return jsonify(json_list)
 
 
-@student_controller.route("/add_students", methods=['POST'])
+@student_controller.route("add_students", methods=['POST'])
 def process_upload():
-    print("fghjk")
-    file = request.files['file']
+    print(request.files)
+    file = request.files['students_file']
+    print(file)
     # Read the CSV file using pandas
     nw_students = pd.read_csv(file)
     student = StudentCrud()
-    student.create_async(nw_students)
-
-    # Return a response (optional)
-    response_data = {'message': 'File uploaded and processed'}
-    return jsonify(response_data)
+    if student.add_students(nw_students):
+        return jsonify({'message': 'the student file was uploaded and processed'}),200
+    return jsonify({"message":"wrong details"}),400

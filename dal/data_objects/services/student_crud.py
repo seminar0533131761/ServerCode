@@ -1,9 +1,13 @@
+import pandas
+
 from dal.data_objects.services.basemodel import BaseModel
 # from dal.data_objects.services.students_desires_crud import StudentsDesiresCrud
 # from dal.data_objects.services.student_crud import StudentCrud
 from dal.models.student import Student
 import os.path
 import pandas as pd
+import json
+from ast import literal_eval
 
 
 class StudentCrud(BaseModel):
@@ -20,12 +24,12 @@ class StudentCrud(BaseModel):
 
     # def __new__(cls, *args, **kwargs):
     #     return BaseModel.__new__(cls)
-    def create_async(self, nw_students):
-        try:
-            df_combined = self.df._append(nw_students, ignore_index=True)
-            df_combined.to_csv(self.path)
-        except FileNotFoundError as not_found:
-            print("file not exists, ", not_found)
+    # def create_async(self, nw_students):
+    #     try:
+    #         df_combined = self.df._append(nw_students, ignore_index=True)
+    #         df_combined.to_csv(self.path)
+    #     except FileNotFoundError as not_found:
+    #         print("file not exists, ", not_found)
 
     def delete_async(self, id):
         # tmp_user = self.users.delete_one({"_id": id})
@@ -34,9 +38,6 @@ class StudentCrud(BaseModel):
         pass
 
     def update_async(self, id, permmision):
-        # tmp_user = self.users.update_one({"_id": id}, {"permission": permission})
-        # self.user = User(tmp_user.user_name, tmp_user._id, tmp_user.permission)
-        # return self.user
         pass
 
     def get_async(self, id):
@@ -80,6 +81,17 @@ class StudentCrud(BaseModel):
         filtered_df = merged_df[merged_df['class_name'] == class_name]
         return filtered_df.T.to_dict().values()
 
-
-s = StudentCrud()
-print(s.get_students_and_desires_by_training("math"))
+    def add_students(self, nw_students):
+        try:
+            students = []
+            for index, row in nw_students.iterrows():
+                student = Student(row["id"], row["first_name"], row["last_name"], row["phone"], row["class_name"])
+                students.append(student)
+            for row in students:
+                new_student = {"id": int(row.id), "first_name": row.first_name, "last_name": row.last_name,
+                               "phone": row.phone, "class_name": row.class_name}
+                self.df = self.df._append(new_student, ignore_index=True)
+            self.df.to_csv(self.path, index=False)
+            return True
+        except Exception as err:
+            return False

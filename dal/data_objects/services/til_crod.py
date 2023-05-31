@@ -15,9 +15,9 @@ class TilCRUD(BaseModel):
         # self.tiles = self.my_db["til"]
         self.til = {}
         self.tils = []
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(my_path, "../../../api/csvs/til.csv")
-        self.df = pd.read_csv(path)
+        self.my_path = os.path.abspath(os.path.dirname(__file__))
+        self.path = os.path.join(self.my_path, "../../../api/csvs/til.csv")
+        self.df = pd.read_csv(self.path)
 
     def create_async(self, obj):
         pass
@@ -41,3 +41,18 @@ class TilCRUD(BaseModel):
 
     def get_all_async(self):
         pass
+
+    def add_students_tiles(self, nw_students):
+        tiles = []
+        for index, row in nw_students.iterrows():
+            til = Til(row["id"], row["class_name"], row["verbal_ability"], row["logical_ability"], row["final_mark"])
+            tiles.append(til)
+            print(str(til))
+        for row in tiles:
+            new_til = {"id": int(row._id), "class_name": row.class_name, "verbal_ability": row.verbal_ability,
+                       "logical_ability": row.logical_ability, "final_mark": row.final_mark}
+            print(str(new_til))
+            self.df = self.df._append(new_til, ignore_index=True)
+            print("fghjk", self.df)
+        self.df.to_csv(self.path, index=False)
+        print(self.df)
