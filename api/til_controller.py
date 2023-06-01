@@ -5,10 +5,10 @@ import pandas as pd
 til_controller = Blueprint('til_controller', __name__)
 
 
-@til_controller.route("get_by_id/<int:user_id>")
-def get_til(user_id):
+@til_controller.route("get_by_id/<int:student_id>")
+def get_til(student_id):
     til = TilCRUD()
-    final = til.get_async(user_id)
+    final = til.get_async(student_id)
     return jsonify({"_id": final._id,
                     "class_name": final.class_name,
                     "verbal_ability": final.verbal_ability,

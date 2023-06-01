@@ -32,10 +32,14 @@ class UserCRUD(BaseModel):
         return self.user
 
     def add_user(self, _id, user_name, permission):
-        new_row = {'id': int(_id), 'user_name': user_name, 'permission': permission}
-        self.df = self.df._append(new_row, ignore_index=True)
-        self.df.to_csv(self.path, index=False)
-        return {"user added successfully":"the user name is {} and the permission is {}".format(user_name,permission)}
+        row_index = self.df.index[self.df['id'] == int(_id)]
+        if pd.isnull(row_index).any():
+            new_row = {'id': int(_id), 'user_name': user_name, 'permission': permission}
+            self.df = self.df._append(new_row, ignore_index=True)
+            self.df.to_csv(self.path, index=False)
+            return {
+                "user added successfully": "the user name is {} and the permission is {}".format(user_name, permission)}
+        return "use ready exits"
 
     def get_all(self):
         ls = self.df.T.to_dict().values()
@@ -43,13 +47,19 @@ class UserCRUD(BaseModel):
 
     def update_permission(self, _id):
         row_index = self.df.index[self.df['id'] == int(_id)]
-        self.df.loc[row_index, 'permission'] = 'super'
-        self.df.to_csv(self.path, index=False)
-        return "update permission to super for id {}".format(_id)
+        if not pd.isnull(row_index).any():
+            if (self.df.loc[row_index, 'permission'] == 'regular').any():
+                self.df.loc[row_index, 'permission'] = 'super'
+                return "update permission to super", True
+            if (self.df.loc[row_index, 'permission'] == 'super').any():
+                self.df.loc[row_index, 'permission'] = 'regular'
+                return "update permission to regular ", True
+            self.df.to_csv(self.path, index=False)
+        return "the wanted student does not exits", False
 
     def del_user(self, _id):
-        row_to_delete = self.df[self.df['id'] == _id].index
+        row_to_delete = self.df[self.df['id'] == int(_id)].index
         self.df = self.df.drop(row_to_delete)
+        print(self.df)
         self.df.to_csv(self.path, index=False)
-        # return {"user deleted successfully": "the id is {}".format(_id)}
         return "user was deleted successfully"

@@ -5,6 +5,7 @@ from dal.data_objects.services.student_crud import StudentCrud
 import pandas as pd
 
 student_controller = Blueprint('student_controller', __name__)
+student = StudentCrud()
 
 
 @student_controller.route("get_by_id/<student_id>")
@@ -13,7 +14,6 @@ def get_student(student_id):
         student_id = int(student_id)
     except Exception as err:
         return jsonify({"message": "id must contains only numbers"}), 400
-    student = StudentCrud()
     final = student.get_async(student_id)
     if "Empty" == final.id:
         return jsonify({"message": "student does not exits"}), 400
@@ -21,54 +21,44 @@ def get_student(student_id):
         {"first_name": final.first_name, "last_name": final.last_name, "student_id": final.id, "phone": final.phone,
          "class": final.class_name}), 200
 
-#
-# @student_controller.route("get_by_class_name/<class_name>")
-# def get_students_by_class(class_name):
-#     student = StudentCrud()
-#     final = student.get_student_by_class_name(class_name)
-#     new_lst = []
-#     for student in final:
-#         new_lst.append(
-#             {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
-#              "phone": student.phone,
-#              "class": student.class_name})
-#     print(new_lst)
-#     # if new_lst.:
-#     #     print("ghj")
-#     #     return jsonify({"message": "class does not exits"}), 400
-#     return jsonify(new_lst), 200
+
+@student_controller.route("get_all_students")
+def get_all_students():
+    """the students will be given only by class or training"""
+    training_name = request.args.get('training_name')
+    class_name = request.args.get('class_name')
+    if training_name:
+        final = student.get_students_and_desires_by_training(training_name)
+        json_list = list(final)
+        if not json_list:
+            return jsonify({"message": "the wanted training does not exits"}), 400
+        return jsonify(json_list), 200
+    if class_name:
+        final = student.get_students_and_desires_by_class(class_name)
+        json_list = list(final)
+        if not json_list:
+            return jsonify({"message": "class does not exits"}), 400
+        return jsonify(json_list), 200
+    return jsonify({"message": "not correct class name or training name"}), 400
 
 
+# not in use to del
 @student_controller.route("get_by_training/<training_name>")
 def get_student_by_training(training_name):
-    student = StudentCrud()
     final = student.get_students_and_desires_by_training(training_name)
-    # json_lst=[]
-    # for student in final:
-    #     json_lst.append(
-    #         {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
-    #          "phone": student.phone,
-    #          "class": student.class_name})
     json_list = list(final)
     if not json_list:
         return jsonify({"message": "class does not exits"}), 400
     return jsonify(json_list), 200
 
 
+#  not in use to del
 @student_controller.route("get_by_class/<class_name>")
 def get_student_by_class(class_name):
-    student = StudentCrud()
     final = student.get_students_and_desires_by_class(class_name)
-    # json_lst=[]
-    # for student in final:
-    #     json_lst.append(
-    #         {"first_name": student.first_name, "last_name": student.last_name, "student_id": student.id,
-    #          "phone": student.phone,
-    #          "class": student.class_name})
     json_list = list(final)
     if not json_list:
-        return jsonify({"message": "class does not exits"}), 400
-    # return jsonify(json_lst)
+        return jsonify({"message": "class does not exits"}), 40
     return jsonify(json_list)
 
 
@@ -79,7 +69,6 @@ def process_upload():
     print(file)
     # Read the CSV file using pandas
     nw_students = pd.read_csv(file)
-    student = StudentCrud()
     if student.add_students(nw_students):
-        return jsonify({'message': 'the student file was uploaded and processed'}),200
-    return jsonify({"message":"wrong details"}),400
+        return jsonify({'message': 'the student file was uploaded and processed'}), 200
+    return jsonify({"message": "wrong details"}), 400
