@@ -28,7 +28,7 @@ class TilCRUD(BaseModel):
     def update_async(self, id):
         pass
 
-    def get_async(self, _id):
+    def get(self, _id):
         # tmp_til = self.tiles.find_one({"_id": _id})
         # self.til = Til(tmp_til["class_name"], tmp_til["_id"], tmp_til["verbal_ability"], tmp_til["logical_ability"])
         # return self.til
@@ -37,6 +37,7 @@ class TilCRUD(BaseModel):
         st = row.to_string(header=False, index=False)
         lst = st.split(" ")
         self.til = Til(lst[0], lst[1], lst[2], lst[3], lst[4])
+        print(self.til._id)
         return self.til
 
     def get_all_async(self):

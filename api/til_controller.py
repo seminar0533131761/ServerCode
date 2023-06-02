@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from dal.data_objects.services.til_crod import TilCRUD
+from dal.data_objects.services.til_crud import TilCRUD
 import pandas as pd
 
 til_controller = Blueprint('til_controller', __name__)
@@ -8,7 +8,8 @@ til_controller = Blueprint('til_controller', __name__)
 @til_controller.route("get_by_id/<int:student_id>")
 def get_til(student_id):
     til = TilCRUD()
-    final = til.get_async(student_id)
+    final = til.get(student_id)
+    print(final.class_name)
     return jsonify({"_id": final._id,
                     "class_name": final.class_name,
                     "verbal_ability": final.verbal_ability,

@@ -8,7 +8,7 @@ information_controller = Blueprint('information_controller', __name__)
 @information_controller.route("get_by_id/<int:user_id>")
 def get_information(user_id):
     information = InformationCrud()
-    final = information.get_async(user_id)
+    final = information.get(user_id)
     return jsonify({"id": final.id,
                     "educator_recommendation": final.educator_recommendation,
                     "principal_recommendation": final.pricipal_recommendation,

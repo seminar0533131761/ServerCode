@@ -56,9 +56,9 @@ def number_of_students_in_each_training():
 @graf_controller.route("compare_students_grades/<student1_id>/<student2_id>")
 def compare_students_grades(student1_id, student2_id):
     diploma = DiplomaCRUD()
-    student1 = StudentCrud().get_async(student1_id)
+    student1 = StudentCrud().get(student1_id)
     student1_name = student1.first_name + " " + student1.last_name
-    student2 = StudentCrud().get_async(student2_id)
+    student2 = StudentCrud().get(student2_id)
     student2_name = student2.first_name + " " + student2.last_name
     student1_grades, student2_grades, subjects = diploma.compare_students_grades(student1_id, student2_id)
     # create plot

@@ -8,9 +8,6 @@ import os.path
 
 class InformationCrud(BaseModel):
     def __init__(self):
-        # super(InformationCrud,self).__init__()
-        # # self.students_information = self.my_db["information"]
-        # self.student_information = {}
         super().__init__()
         self.information = {}
         self.informations = []
@@ -18,19 +15,7 @@ class InformationCrud(BaseModel):
         self.path = os.path.join(self.my_path, "../../../api/csvs/information.csv")
         self.df = pd.read_csv(self.path)
 
-    def create_async(self, obj):
-        pass
-
-    def delete_async(self, id):
-        pass
-
-    def update_async(self, id):
-        pass
-
-    async def get_all_async(self):
-        pass
-
-    def get_async(self, id):
+    def get(self, id):
         int_id = int(id)
         row = self.df.loc[self.df['id'] == int_id]
         st = row.to_string(header=False, index=False)

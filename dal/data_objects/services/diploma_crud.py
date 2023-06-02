@@ -13,10 +13,7 @@ class DiplomaCRUD(BaseModel):
         self.path = os.path.join(self.my_path, "../../../api/csvs/diploma.csv")
         self.df = pd.read_csv(self.path)
 
-    def create_async(self, obj):
-        pass
-
-    def get_async(self, id):
+    def get(self, id):
         int_id = int(id)
         row = self.df.loc[self.df['id'] == int_id]
         st = row.to_string(header=False, index=False)

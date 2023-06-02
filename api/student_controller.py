@@ -1,5 +1,3 @@
-import os
-
 from flask import Blueprint, jsonify, request
 from dal.data_objects.services.student_crud import StudentCrud
 import pandas as pd
@@ -14,7 +12,7 @@ def get_student(student_id):
         student_id = int(student_id)
     except Exception as err:
         return jsonify({"message": "id must contains only numbers"}), 400
-    final = student.get_async(student_id)
+    final = student.get(student_id)
     if "Empty" == final.id:
         return jsonify({"message": "student does not exits"}), 400
     return jsonify(
