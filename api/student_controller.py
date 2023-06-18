@@ -40,24 +40,24 @@ def get_all_students():
     return jsonify({"message": "not correct class name or training name"}), 400
 
 
-# not in use to del
-@student_controller.route("get_by_training/<training_name>")
-def get_student_by_training(training_name):
-    final = student.get_students_and_desires_by_training(training_name)
-    json_list = list(final)
-    if not json_list:
-        return jsonify({"message": "class does not exits"}), 400
-    return jsonify(json_list), 200
+# # not in use to del
+# @student_controller.route("get_by_training/<training_name>")
+# def get_student_by_training(training_name):
+#     final = student.get_students_and_desires_by_training(training_name)
+#     json_list = list(final)
+#     if not json_list:
+#         return jsonify({"message": "class does not exits"}), 400
+#     return jsonify(json_list), 200
 
 
-#  not in use to del
-@student_controller.route("get_by_class/<class_name>")
-def get_student_by_class(class_name):
-    final = student.get_students_and_desires_by_class(class_name)
-    json_list = list(final)
-    if not json_list:
-        return jsonify({"message": "class does not exits"}), 40
-    return jsonify(json_list)
+# #  not in use to del
+# @student_controller.route("get_by_class/<class_name>")
+# def get_student_by_class(class_name):
+#     final = student.get_students_and_desires_by_class(class_name)
+#     json_list = list(final)
+#     if not json_list:
+#         return jsonify({"message": "class does not exits"}), 40
+#     return jsonify(json_list)
 
 
 @student_controller.route("add_students", methods=['POST'])

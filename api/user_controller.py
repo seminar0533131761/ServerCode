@@ -34,7 +34,6 @@ def update_permission(_id):
     try:
         answer, is_exit = user.update_permission(_id)
         print(answer, is_exit, "hjkl")
-
         if is_exit:
             return jsonify({"the server answered": answer}), 200
         return jsonify({"error": answer}), 400

@@ -3,11 +3,11 @@ from flask import Blueprint, jsonify, request
 from dal.data_objects.services.students_desires_crud import StudentsDesiresCrud
 
 student_desires_controller = Blueprint('student_desires_controller', __name__)
+student_desires = StudentsDesiresCrud()
 
 
 @student_desires_controller.route("get_by_id/<int:student_id>")
 def get_user(student_id):
-    student_desires = StudentsDesiresCrud()
     final = student_desires.get(student_id)
     return jsonify(
         {"student_id": final.id, "student_preference1": final.preference1, "student_preference2": final.preference2,
@@ -41,7 +41,6 @@ def process_upload():
     # Read the CSV file using pandas
     nw_students_desires = pd.read_csv(file)
     print(nw_students_desires)
-    student_desires = StudentsDesiresCrud()
     student_desires.add_students_desires(nw_students_desires)
     response_data = {'message': 'the student desires file was uploaded and processed'}
     return jsonify(response_data)
